@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elite Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Elite Dashboard</h1>
+  <div class="dashboard">
+    <!-- To-Do List -->
+    <div class="widget">
+      <h2>To-Do List</h2>
+      <input type="text" id="todo-input" placeholder="Enter task" />
+      <button onclick="addTask()">Add Task</button>
+      <ul id="todo-list"></ul>
+    </div>
+
+    <!-- Quote Generator -->
+    <div class="widget">
+      <h2>Quote Generator</h2>
+      <button onclick="generateQuote()">Get Quote</button>
+      <p id="quote-display"></p>
+    </div>
+
+    <!-- Currency Converter -->
+    <div class="widget">
+      <h2>Currency Converter</h2>
+      <input type="text" id="amount" placeholder="Amount" />
+      <select id="from-currency"></select>
+      <select id="to-currency"></select>
+      <button onclick="convertCurrency()">Convert</button>
+      <p id="currency-result"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
