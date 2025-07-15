@@ -1,40 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elite Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Productivity Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Elite Dashboard</h1>
-  <div class="dashboard">
-    <!-- To-Do List -->
-    <div class="widget">
-      <h2>To-Do List</h2>
-      <input type="text" id="todo-input" placeholder="Enter task" />
-      <button onclick="addTask()">Add Task</button>
-      <ul id="todo-list"></ul>
+    <div class="dashboard">
+        <!-- Todo List Widget -->
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fas fa-tasks"></i>
+                <h2>To-Do List</h2>
+            </div>
+            <div class="todo-input">
+                <input type="text" id="taskInput" placeholder="Add a new task...">
+                <button class="btn" onclick="addTask()">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="task-list" id="taskList"></div>
+        </div>
+
+        <!-- Weather Widget -->
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fas fa-cloud-sun"></i>
+                <h2>Weather</h2>
+            </div>
+            <div class="weather-input">
+                <input type="text" id="locationInput" placeholder="Enter city name (e.g., London, New York)">
+                <button class="btn" onclick="getWeather()">
+                    <i class="fas fa-search"></i> Get Weather
+                </button>
+            </div>
+            <div class="weather-info" id="weatherInfo">
+                <div style="text-align: center; color: #666; padding: 20px;">
+                    <i class="fas fa-map-marker-alt" style="font-size: 32px; margin-bottom: 10px;"></i>
+                    <p>Enter a city name to get weather information</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Widget -->
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fas fa-newspaper"></i>
+                <h2>Latest News</h2>
+            </div>
+            <div class="news-list" id="newsList">
+                <div class="loading">Loading news</div>
+            </div>
+        </div>
+
+        <!-- Image Gallery Widget -->
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fas fa-images"></i>
+                <h2>Image Gallery</h2>
+            </div>
+            <div class="image-upload">
+                <div class="file-input-wrapper">
+                    <input type="file" id="imageInput" accept="image/*" multiple onchange="uploadImages(event)">
+                    <label for="imageInput" class="file-input-label">
+                        <i class="fas fa-upload"></i> Upload Images
+                    </label>
+                </div>
+            </div>
+            <div class="image-grid" id="imageGrid"></div>
+        </div>
+
+        <!-- Calculator Widget -->
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fas fa-calculator"></i>
+                <h2>Calculator</h2>
+            </div>
+            <div class="calculator">
+                <input type="text" class="calc-display" id="calcDisplay" readonly>
+                <div class="calc-buttons">
+                    <button class="calc-btn clear" onclick="clearCalculator()">C</button>
+                    <button class="calc-btn operator" onclick="appendToDisplay('/')" title="Divide">÷</button>
+                    <button class="calc-btn operator" onclick="appendToDisplay('*')" title="Multiply">×</button>
+                    <button class="calc-btn operator" onclick="deleteLast()">⌫</button>
+                    
+                    <button class="calc-btn number" onclick="appendToDisplay('7')">7</button>
+                    <button class="calc-btn number" onclick="appendToDisplay('8')">8</button>
+                    <button class="calc-btn number" onclick="appendToDisplay('9')">9</button>
+                    <button class="calc-btn operator" onclick="appendToDisplay('-')">-</button>
+                    
+                    <button class="calc-btn number" onclick="appendToDisplay('4')">4</button>
+                    <button class="calc-btn number" onclick="appendToDisplay('5')">5</button>
+                    <button class="calc-btn number" onclick="appendToDisplay('6')">6</button>
+                    <button class="calc-btn operator" onclick="appendToDisplay('+')">+</button>
+                    
+                    <button class="calc-btn number" onclick="appendToDisplay('1')">1</button>
+                    <button class="calc-btn number" onclick="appendToDisplay('2')">2</button>
+                    <button class="calc-btn number" onclick="appendToDisplay('3')">3</button>
+                    <button class="calc-btn equals" onclick="calculateResult()" rowspan="2">=</button>
+                    
+                    <button class="calc-btn number zero" onclick="appendToDisplay('0')">0</button>
+                    <button class="calc-btn number" onclick="appendToDisplay('.')">.</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Quote Generator -->
-    <div class="widget">
-      <h2>Quote Generator</h2>
-      <button onclick="generateQuote()">Get Quote</button>
-      <p id="quote-display"></p>
-    </div>
-
-    <!-- Currency Converter -->
-    <div class="widget">
-      <h2>Currency Converter</h2>
-      <input type="text" id="amount" placeholder="Amount" />
-      <select id="from-currency"></select>
-      <select id="to-currency"></select>
-      <button onclick="convertCurrency()">Convert</button>
-      <p id="currency-result"></p>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
