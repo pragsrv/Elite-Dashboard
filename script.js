@@ -396,6 +396,239 @@ function deleteLast() {
     }
 }
 
+// Random Quotes Functions
+const quotes = [
+    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+    { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+    { text: "Life is what happens to you while you're busy making other plans.", author: "John Lennon" },
+    { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+    { text: "It is during our darkest moments that we must focus to see the light.", author: "Aristotle" },
+    { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+    { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+    { text: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
+    { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+    { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" }
+];
+
+function loadNewQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const quote = quotes[randomIndex];
+    
+    document.getElementById('quoteText').textContent = `"${quote.text}"`;
+    document.getElementById('quoteAuthor').textContent = `- ${quote.author}`;
+}
+
+// Currency Converter Functions
+let exchangeRates = {};
+
+async function loadExchangeRates() {
+    try {
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const data = await response.json();
+        exchangeRates = data.rates;
+        convertCurrency();
+    } catch (error) {
+        console.error('Error loading exchange rates:', error);
+        // Fallback rates
+        exchangeRates = {
+            USD: 1,
+            EUR: 0.85,
+            GBP: 0.73,
+            JPY: 110,
+            CAD: 1.25,
+            AUD: 1.35,
+            CHF: 0.92,
+            CNY: 6.45,
+            INR: 74.5
+        };
+        convertCurrency();
+    }
+}
+
+function convertCurrency() {
+    const fromCurrency = document.getElementById('fromCurrency').value;
+    const toCurrency = document.getElementById('toCurrency').value;
+    const fromAmount = parseFloat(document.getElementById('fromAmount').value);
+    
+    if (isNaN(fromAmount) || fromAmount <= 0) {
+        document.getElementById('toAmount').value = '';
+        document.getElementById('currencyResult').textContent = 'Enter amount to convert';
+        return;
+    }
+    
+    const fromRate = exchangeRates[fromCurrency] || 1;
+    const toRate = exchangeRates[toCurrency] || 1;
+    
+    const convertedAmount = (fromAmount / fromRate) * toRate;
+    
+    document.getElementById('toAmount').value = convertedAmount.toFixed(2);
+    document.getElementById('currencyResult').textContent = 
+        `${fromAmount} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`;
+}
+
+function swapCurrencies() {
+    const fromCurrency = document.getElementById('fromCurrency');
+    const toCurrency = document.getElementById('toCurrency');
+    
+    const temp = fromCurrency.value;
+    fromCurrency.value = toCurrency.value;
+    toCurrency.value = temp;
+    
+    convertCurrency();
+}
+
+// Pomodoro Timer Functions
+let timerInterval;
+let isRunning = false;
+let timeLeft = 25 * 60; // 25 minutes in seconds
+let currentMode = 'work';
+
+const timerModes = {
+    work: 25 * 60,
+    shortBreak: 5 * 60,
+    longBreak: 15 * 60
+};
+
+function setTimerMode(mode) {
+    currentMode = mode;
+    timeLeft = timerModes[mode];
+    
+    // Update active mode button
+    document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Update status
+    const statusText = {
+        work: 'Ready to work',
+        shortBreak: 'Ready for short break',
+        longBreak: 'Ready for long break'
+    };
+    document.getElementById('timerStatus').textContent = statusText[mode];
+    
+    updateTimerDisplay();
+    
+    if (isRunning) {
+        pauseTimer();
+    }
+}
+
+function startTimer() {
+    if (!isRunning) {
+        isRunning = true;
+        document.getElementById('startBtn').style.display = 'none';
+        document.getElementById('pauseBtn').style.display = 'inline-block';
+        
+        const statusText = {
+            work: 'Working...',
+            shortBreak: 'Taking short break...',
+            longBreak: 'Taking long break...'
+        };
+        document.getElementById('timerStatus').textContent = statusText[currentMode];
+        
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                document.getElementById('startBtn').style.display = 'inline-block';
+                document.getElementById('pauseBtn').style.display = 'none';
+                
+                // Show completion message
+                const completionText = {
+                    work: 'Work session complete! Take a break.',
+                    shortBreak: 'Break over! Ready to work?',
+                    longBreak: 'Long break complete! Ready to work?'
+                };
+                document.getElementById('timerStatus').textContent = completionText[currentMode];
+                
+                // Play notification sound (optional)
+                if ('Notification' in window) {
+                    new Notification('Pomodoro Timer', {
+                        body: completionText[currentMode]
+                    });
+                }
+                
+                // Reset timer
+                timeLeft = timerModes[currentMode];
+                updateTimerDisplay();
+            }
+        }, 1000);
+    }
+}
+
+function pauseTimer() {
+    if (isRunning) {
+        isRunning = false;
+        clearInterval(timerInterval);
+        document.getElementById('startBtn').style.display = 'inline-block';
+        document.getElementById('pauseBtn').style.display = 'none';
+        
+        const statusText = {
+            work: 'Work paused',
+            shortBreak: 'Break paused',
+            longBreak: 'Break paused'
+        };
+        document.getElementById('timerStatus').textContent = statusText[currentMode];
+    }
+}
+
+function resetTimer() {
+    isRunning = false;
+    clearInterval(timerInterval);
+    timeLeft = timerModes[currentMode];
+    updateTimerDisplay();
+    
+    document.getElementById('startBtn').style.display = 'inline-block';
+    document.getElementById('pauseBtn').style.display = 'none';
+    
+    const statusText = {
+        work: 'Ready to work',
+        shortBreak: 'Ready for short break',
+        longBreak: 'Ready for long break'
+    };
+    document.getElementById('timerStatus').textContent = statusText[currentMode];
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    document.getElementById('timerDisplay').textContent = display;
+}
+
+// Digital Clock Function
+function updateDigitalClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    
+    document.getElementById('digitalClock').textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+// Dark Mode Functions
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
+    // Update icon
+    const icon = document.getElementById('darkModeIcon');
+    icon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+    
+    // Save preference
+    localStorage.setItem('darkMode', isDarkMode);
+}
+
+function initializeDarkMode() {
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('darkModeIcon').className = 'fas fa-sun';
+    }
+}
+
 // Event Listeners
 document.getElementById('taskInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
@@ -428,10 +661,25 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+// Currency converter event listeners
+document.getElementById('fromAmount').addEventListener('input', convertCurrency);
+document.getElementById('fromCurrency').addEventListener('change', convertCurrency);
+document.getElementById('toCurrency').addEventListener('change', convertCurrency);
+
+// Request notification permission for Pomodoro timer
+if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+}
+
 // Initialize dashboard
 window.addEventListener('load', function() {
     loadNews();
     renderTasks();
     renderImages();
     updateDisplay();
+    loadNewQuote();
+    loadExchangeRates();
+    initializeDarkMode();
+    updateDigitalClock();
+    setInterval(updateDigitalClock, 1000);
 });
