@@ -1,6 +1,10 @@
 # Elite Dashboard
 
 Elite Dashboard is a modern, responsive, and feature-rich personal productivity dashboard built with HTML, CSS, and JavaScript. It brings together essential productivity tools in a single, visually appealing interface.
+> AI was used in proper wokring of this project, and to integrate Dark Mode in the overall Project
+
+
+![ScreenRecording2025-07-20184906-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/0c43791a-bd2e-4e30-9fc3-b8ba2d60d6df)
 
 ## Features
 
