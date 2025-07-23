@@ -4,15 +4,17 @@ Elite Dashboard is a modern, responsive, and feature-rich personal productivity 
 
 ## Features
 
-- **Dark Mode**: Toggle between light and dark themes for comfortable viewing.
+- **Responsive Layout**: Widgets automatically fill available space with well-defined gaps and margins, adapting to any screen size.
+- **Dark Mode**: Toggle between light and dark themes for comfortable viewing. All widgets and text invert colors for accessibility.
 - **To-Do List**: Add, complete, and delete tasks to manage your daily activities.
-- **Weather Widget**: Get real-time weather updates for any city using a weather API.
-- **Latest News**: Stay updated with the latest headlines fetched from NewsAPI.org.
-- **Image Gallery**: Upload, view, and delete images in a beautiful grid layout.
-- **Calculator**: Perform basic arithmetic operations with a stylish calculator.
+- **Weather Widget**: Get real-time weather updates for any city using a weather API. Placeholder and results adapt to dark mode.
+- **Latest News**: Stay updated with the latest headlines fetched from NewsAPI.org. News content and loading/error states adapt to dark mode.
+- **Image Gallery**: Upload, view, and delete images in a beautiful grid layout. Deletion is instant and reliable.
+- **Calculator**: Perform basic arithmetic operations with a stylish calculator, including keyboard support.
 - **Random Quotes**: Get inspired with a new motivational quote at the click of a button.
-- **Currency Converter**: Convert between major world currencies with live exchange rates.
-- **Pomodoro Timer**: Boost productivity with a customizable Pomodoro timer and digital clock.
+- **Currency Converter**: Convert between major world currencies with live exchange rates from ExchangeRate-API.
+- **Pomodoro Timer**: Boost productivity with a customizable Pomodoro timer and digital clock. Includes notification support.
+- **Accessibility Improvements**: Most form elements have labels and accessible names. Color contrast is improved in dark mode.
 
 ## Demo
 
@@ -36,10 +38,14 @@ No build tools or dependencies are required. All features work client-side.
 - **News Widget:**
   - The news widget uses NewsAPI.org. Replace the `NEWS_API_KEY` in `index.html` with your own API key for live news.
 
+## Accessibility & Customization
+
+- All widgets are keyboard accessible and support color inversion for dark mode.
+- You can customize widget order, layout, and styles by editing `index.html` and the embedded CSS.
+
 ## Credits
 
 - [Font Awesome](https://fontawesome.com/) for icons
-- [NewsAPI.org](https://newsapi.org/) for news data
 - [ExchangeRate-API](https://www.exchangerate-api.com/) for currency rates
 
 ## License

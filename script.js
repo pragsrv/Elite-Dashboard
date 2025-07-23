@@ -683,3 +683,210 @@ window.addEventListener('load', function() {
     updateDigitalClock();
     setInterval(updateDigitalClock, 1000);
 });
+// Widget Management System
+const availableWidgets = {
+    'todo': {
+        id: 'todo-widget',
+        name: 'To-Do List',
+        icon: 'fas fa-tasks',
+        active: true
+    },
+    'weather': {
+        id: 'weather-widget',
+        name: 'Weather',
+        icon: 'fas fa-cloud-sun',
+        active: true
+    },
+    'gallery': {
+        id: 'gallery-widget',
+        name: 'Image Gallery',
+        icon: 'fas fa-images',
+        active: true
+    },
+    'calculator': {
+        id: 'calculator-widget',
+        name: 'Calculator',
+        icon: 'fas fa-calculator',
+        active: false
+    },
+    'quotes': {
+        id: 'quotes-widget',
+        name: 'Random Quotes',
+        icon: 'fas fa-quote-right',
+        active: false
+    },
+    'currency': {
+        id: 'currency-widget',
+        name: 'Currency Converter',
+        icon: 'fas fa-exchange-alt',
+        active: false
+    },
+    'timer': {
+        id: 'timer-widget',
+        name: 'Pomodoro Timer',
+        icon: 'fas fa-clock',
+        active: false
+    }
+};
+
+// Edit Widgets Modal Functions
+function toggleEditWidgets() {
+    const modal = document.getElementById('editWidgetsModal');
+    const isActive = modal.classList.contains('active');
+    
+    if (isActive) {
+        modal.classList.remove('active');
+    } else {
+        modal.classList.add('active');
+        renderWidgetLists();
+    }
+}
+
+function renderWidgetLists() {
+    const activeList = document.getElementById('activeWidgetsList');
+    const availableList = document.getElementById('availableWidgetsList');
+    
+    activeList.innerHTML = '';
+    availableList.innerHTML = '';
+    
+    Object.entries(availableWidgets).forEach(([key, widget]) => {
+        const widgetItem = createWidgetItem(key, widget);
+        
+        if (widget.active) {
+            activeList.appendChild(widgetItem);
+        } else {
+            availableList.appendChild(widgetItem);
+        }
+    });
+}
+
+function createWidgetItem(key, widget) {
+    const item = document.createElement('div');
+    item.className = 'widget-item';
+    
+    const actionBtn = widget.active 
+        ? `<button class="widget-action-btn remove-widget-btn" onclick="removeWidget('${key}')">
+             <i class="fas fa-minus"></i> Remove
+           </button>`
+        : `<button class="widget-action-btn add-widget-btn" onclick="addWidget('${key}')">
+             <i class="fas fa-plus"></i> Add
+           </button>`;
+    
+    item.innerHTML = `
+        <div class="widget-info">
+            <i class="${widget.icon}"></i>
+            <span>${widget.name}</span>
+        </div>
+        ${actionBtn}
+    `;
+    
+    return item;
+}
+
+function addWidget(widgetKey) {
+    const widget = availableWidgets[widgetKey];
+    const widgetElement = document.getElementById(widget.id);
+    
+    if (widgetElement) {
+        widgetElement.style.display = 'flex';
+        availableWidgets[widgetKey].active = true;
+        
+        // Save to localStorage
+        saveWidgetPreferences();
+        
+        // Re-render the lists
+        renderWidgetLists();
+        
+        // Initialize widget-specific functionality if needed
+        initializeWidget(widgetKey);
+    }
+}
+
+function removeWidget(widgetKey) {
+    const widget = availableWidgets[widgetKey];
+    const widgetElement = document.getElementById(widget.id);
+    
+    if (widgetElement) {
+        widgetElement.style.display = 'none';
+        availableWidgets[widgetKey].active = false;
+        
+        // Save to localStorage
+        saveWidgetPreferences();
+        
+        // Re-render the lists
+        renderWidgetLists();
+    }
+}
+
+function initializeWidget(widgetKey) {
+    switch(widgetKey) {
+        case 'currency':
+            loadExchangeRates();
+            break;
+        case 'calculator':
+            updateDisplay();
+            break;
+        case 'quotes':
+            loadNewQuote();
+            break;
+        case 'timer':
+            updateTimerDisplay();
+            break;
+    }
+}
+
+function saveWidgetPreferences() {
+    const preferences = {};
+    Object.entries(availableWidgets).forEach(([key, widget]) => {
+        preferences[key] = widget.active;
+    });
+    localStorage.setItem('widgetPreferences', JSON.stringify(preferences));
+}
+
+function loadWidgetPreferences() {
+    const saved = localStorage.getItem('widgetPreferences');
+    if (saved) {
+        const preferences = JSON.parse(saved);
+        Object.entries(preferences).forEach(([key, active]) => {
+            if (availableWidgets[key]) {
+                availableWidgets[key].active = active;
+                const widgetElement = document.getElementById(availableWidgets[key].id);
+                if (widgetElement) {
+                    widgetElement.style.display = active ? 'flex' : 'none';
+                }
+            }
+        });
+    } else {
+        // Default: show only todo, weather, and gallery
+        Object.entries(availableWidgets).forEach(([key, widget]) => {
+            const widgetElement = document.getElementById(widget.id);
+            if (widgetElement) {
+                widgetElement.style.display = widget.active ? 'flex' : 'none';
+            }
+        });
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('editWidgetsModal');
+    if (event.target === modal) {
+        toggleEditWidgets();
+    }
+});
+
+// Add to the existing window load event listener
+window.addEventListener('load', function() {
+    loadNews();
+    renderTasks();
+    renderImages();
+    updateDisplay();
+    loadNewQuote();
+    loadExchangeRates();
+    initializeDarkMode();
+    updateDigitalClock();
+    setInterval(updateDigitalClock, 1000);
+    
+    // Load widget preferences
+    loadWidgetPreferences();
+});

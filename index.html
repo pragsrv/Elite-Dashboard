@@ -9,11 +9,38 @@
 </head>
 <body>
     <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-      <i class="fas fa-moon" id="darkModeIcon"></i>
+        <i class="fas fa-moon" id="darkModeIcon"></i>
     </button>
-    <div class="dashboard">
+    
+    <button class="edit-widgets-toggle" onclick="toggleEditWidgets()">
+        <i class="fas fa-cog"></i> Edit Widgets
+    </button>
+
+    <!-- Edit Widgets Modal -->
+    <div class="edit-widgets-modal" id="editWidgetsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Dashboard Widgets</h3>
+                <button class="close-modal" onclick="toggleEditWidgets()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="widget-section">
+                    <h4><i class="fas fa-eye"></i> Active Widgets</h4>
+                    <div class="widget-list" id="activeWidgetsList"></div>
+                </div>
+                <div class="widget-section">
+                    <h4><i class="fas fa-eye-slash"></i> Available Widgets</h4>
+                    <div class="widget-list" id="availableWidgetsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard" id="dashboard">
         <!-- Todo List Widget -->
-        <div class="widget">
+        <div class="widget" id="todo-widget">
             <div class="widget-header">
                 <i class="fas fa-tasks"></i>
                 <h2>To-Do List</h2>
@@ -28,7 +55,7 @@
         </div>
 
         <!-- Weather Widget -->
-        <div class="widget">
+        <div class="widget" id="weather-widget">
             <div class="widget-header">
                 <i class="fas fa-cloud-sun"></i>
                 <h2>Weather</h2>
@@ -46,8 +73,9 @@
                 </div>
             </div>
         </div>
+
         <!-- Image Gallery Widget -->
-        <div class="widget">
+        <div class="widget" id="gallery-widget">
             <div class="widget-header">
                 <i class="fas fa-images"></i>
                 <h2>Image Gallery</h2>
@@ -63,8 +91,8 @@
             <div class="image-grid" id="imageGrid"></div>
         </div>
 
-        <!-- Calculator Widget -->
-        <div class="widget">
+        <!-- Calculator Widget (Hidden initially) -->
+        <div class="widget" id="calculator-widget" style="display: none;">
             <div class="widget-header">
                 <i class="fas fa-calculator"></i>
                 <h2>Calculator</h2>
@@ -98,8 +126,8 @@
             </div>
         </div>
 
-        <!-- Random Quotes Widget -->
-        <div class="widget">
+        <!-- Random Quotes Widget (Hidden initially) -->
+        <div class="widget" id="quotes-widget" style="display: none;">
             <div class="widget-header">
                 <i class="fas fa-quote-right"></i>
                 <h2>Random Quotes</h2>
@@ -113,8 +141,8 @@
             </div>
         </div>
 
-        <!-- Currency Converter Widget -->
-        <div class="widget">
+        <!-- Currency Converter Widget (Hidden initially) -->
+        <div class="widget" id="currency-widget" style="display: none;">
             <div class="widget-header">
                 <i class="fas fa-exchange-alt"></i>
                 <h2>Currency Converter</h2>
@@ -153,8 +181,8 @@
             <div class="currency-result" id="currencyResult">Enter amount to convert</div>
         </div>
 
-        <!-- Pomodoro Timer Widget -->
-        <div class="widget">
+        <!-- Pomodoro Timer Widget (Hidden initially) -->
+        <div class="widget" id="timer-widget" style="display: none;">
             <div class="widget-header">
                 <i class="fas fa-clock"></i>
                 <h2>Pomodoro Timer</h2>

@@ -769,3 +769,229 @@ body {
         font-size: 16px;
     }
 }
+/* Edit Widgets Button */
+.edit-widgets-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.edit-widgets-toggle:hover {
+    background: #5a67d8;
+    transform: translateY(-2px);
+}
+
+.dark-mode .edit-widgets-toggle {
+    background: #ed8936;
+}
+
+.dark-mode .edit-widgets-toggle:hover {
+    background: #dd6b20;
+}
+
+/* Edit Widgets Modal */
+.edit-widgets-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.edit-widgets-modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .modal-content {
+    background: #2d3748;
+    color: white;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.dark-mode .modal-header {
+    border-bottom-color: #4a5568;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 20px;
+}
+
+.dark-mode .modal-header h3 {
+    color: white;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.dark-mode .close-modal {
+    color: #a0aec0;
+}
+
+.dark-mode .close-modal:hover {
+    background: #4a5568;
+    color: white;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.widget-section {
+    margin-bottom: 30px;
+}
+
+.widget-section h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dark-mode .widget-section h4 {
+    color: white;
+}
+
+.widget-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+}
+
+.widget-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.widget-item:hover {
+    background: #e9ecef;
+    border-color: #667eea;
+}
+
+.dark-mode .widget-item {
+    background: #4a5568;
+    color: white;
+}
+
+.dark-mode .widget-item:hover {
+    background: #718096;
+}
+
+.widget-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.widget-info i {
+    color: #667eea;
+    font-size: 16px;
+}
+
+.widget-info span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.widget-action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.add-widget-btn {
+    background: #38a169;
+    color: white;
+}
+
+.add-widget-btn:hover {
+    background: #2f855a;
+}
+
+.remove-widget-btn {
+    background: #e53e3e;
+    color: white;
+}
+
+.remove-widget-btn:hover {
+    background: #c53030;
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .widget-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .edit-widgets-toggle {
+        left: 10px;
+        top: 80px;
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
