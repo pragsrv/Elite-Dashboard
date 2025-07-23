@@ -1,10 +1,10 @@
 # Elite Dashboard
 
 Elite Dashboard is a modern, responsive, and feature-rich personal productivity dashboard built with HTML, CSS, and JavaScript. It brings together essential productivity tools in a single, visually appealing interface.
-> AI was used in proper wokring of this project, and to integrate Dark Mode in the overall Project
+> AI was used in proper wokring of this project, and to integrate Dark Mode in the overall Project, and to add the edit widgets button
 
+![20250723-0641-17 5472532-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/59459573-94cc-4966-ba2b-c45de5b8e22b)
 
-![ScreenRecording2025-07-20184906-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/0c43791a-bd2e-4e30-9fc3-b8ba2d60d6df)
 
 ## Features
 
@@ -13,6 +13,7 @@ Elite Dashboard is a modern, responsive, and feature-rich personal productivity 
 - **To-Do List**: Add, complete, and delete tasks to manage your daily activities.
 - **Weather Widget**: Get real-time weather updates for any city using a weather API. Placeholder and results adapt to dark mode.
 - **Latest News**: Stay updated with the latest headlines fetched from NewsAPI.org. News content and loading/error states adapt to dark mode.
+> Latest News removed due to incompatible API
 - **Image Gallery**: Upload, view, and delete images in a beautiful grid layout. Deletion is instant and reliable.
 - **Calculator**: Perform basic arithmetic operations with a stylish calculator, including keyboard support.
 - **Random Quotes**: Get inspired with a new motivational quote at the click of a button.
